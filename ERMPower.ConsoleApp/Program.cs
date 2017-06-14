@@ -10,6 +10,7 @@ using ERMPower.Business.DataExtractors;
 using ERMPower.Business.FileProcessors;
 using ERMPower.Business.Models;
 using ERMPower.Infrastructure.Calculations.Median;
+using ERMPower.Core;
 
 namespace ERMPower.ConsoleApp
 {

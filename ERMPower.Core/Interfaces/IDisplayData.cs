@@ -1,4 +1,4 @@
-﻿namespace ERMPower.Infrastructure.Interfaces
+﻿namespace ERMPower.Core.Interfaces
 {
     public interface IMedianDisplayData
     {

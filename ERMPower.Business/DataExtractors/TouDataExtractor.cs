@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ERMPower.Business.Models;
 using ERMPower.Infrastructure;
-using ERMPower.Infrastructure.Interfaces;
+using ERMPower.Core.Interfaces;
+using ERMPower.Core;
 
 namespace ERMPower.Business.DataExtractors
 {

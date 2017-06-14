@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ERMPower.Infrastructure.Interfaces
+namespace ERMPower.Core.Interfaces
 {
     public interface IMedianStrategy
     {

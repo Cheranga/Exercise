@@ -56,6 +56,10 @@
       <Project>{ED81A187-F628-4BDE-A15E-0C049B7A249A}</Project>
       <Name>ERMPower.Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ERMPower.Core\ERMPower.Core.csproj">
+      <Project>{D7FC504E-BD9A-47A8-AA02-140D91064177}</Project>
+      <Name>ERMPower.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ERMPower.Infrastructure\ERMPower.Infrastructure.csproj">
       <Project>{65FAEACA-914C-47EF-A6C2-1514FCC05AEE}</Project>
       <Name>ERMPower.Infrastructure</Name>

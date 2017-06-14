@@ -1,4 +1,4 @@
-namespace ERMPower.Infrastructure
+namespace ERMPower.Core
 {
     public class Result<T>
     {

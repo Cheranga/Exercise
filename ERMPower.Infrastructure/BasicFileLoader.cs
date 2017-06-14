@@ -2,7 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using ERMPower.Infrastructure.Interfaces;
+using ERMPower.Core;
+using ERMPower.Core.Interfaces;
 
 namespace ERMPower.Infrastructure
 {

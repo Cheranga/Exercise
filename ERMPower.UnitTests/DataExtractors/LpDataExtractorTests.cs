@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ERMPower.Business.DataExtractors;
 using ERMPower.Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ERMPower.Core;
 
-namespace ERMPower.UnitTests.DataExtractors
+namespace ERMPower.Tests.DataExtractors
 {
     [TestClass]
     public class LpDataExtractorTests
