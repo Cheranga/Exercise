@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using ERMPower.Business.DataExtractors;
-using ERMPower.Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ERMPower.Core;
 

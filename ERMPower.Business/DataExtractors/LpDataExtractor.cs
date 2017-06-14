@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.SymbolStore;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ERMPower.Business.Models;
-using ERMPower.Infrastructure;
 using ERMPower.Core;
 using ERMPower.Core.Interfaces;
 

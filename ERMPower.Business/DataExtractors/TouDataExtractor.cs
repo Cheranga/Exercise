@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ERMPower.Business.Models;
-using ERMPower.Infrastructure;
 using ERMPower.Core.Interfaces;
 using ERMPower.Core;
 

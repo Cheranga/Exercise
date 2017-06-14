@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CalculationException.cs" />
+    <Compile Include="Exceptions\CalculationException.cs" />
     <Compile Include="CalculationResult.cs" />
     <Compile Include="FileData.cs" />
     <Compile Include="Interfaces\IDataExtractor.cs" />

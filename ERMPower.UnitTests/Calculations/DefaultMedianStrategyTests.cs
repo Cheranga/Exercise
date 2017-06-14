@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using ERMPower.Business.Models;
-using ERMPower.Infrastructure;
 using ERMPower.Infrastructure.Calculations.Median;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ERMPower.Core;
