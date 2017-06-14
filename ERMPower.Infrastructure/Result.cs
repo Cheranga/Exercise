@@ -1,15 +1,18 @@
-namespace ERMPower.ConsoleApp
+namespace ERMPower.Infrastructure
 {
     public class Result<T>
     {
-        private readonly T _result;
-        private readonly string _message;
+        private readonly T _data;
+        public virtual  ResultStatus Status { get; set; }
 
-
-        public Result(T result, string message = null)
+        public T Data
         {
-            _result = result;
-            _message = message;
+            get { return _data; }
+        }
+
+        public Result(T data)
+        {   
+            _data = data;
         }
     }
 }

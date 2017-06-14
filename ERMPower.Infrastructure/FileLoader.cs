@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ERMPower.ConsoleApp
+namespace ERMPower.Infrastructure
 {
     public class FileLoader
     {
@@ -15,15 +15,6 @@ namespace ERMPower.ConsoleApp
             try
             {
                 var fileContent = await Task.WhenAll(fileReadTasks);
-
-                //var oneList = fileContent.AsParallel().Where(content => (content, "1", StringComparison.OrdinalIgnoreCase)).ToList();
-                var stopWatch = System.Diagnostics.Stopwatch.StartNew();
-                var oneList = fileContent.AsParallel().Where(content => content.Contains("214612653")).ToList();
-                stopWatch.Stop();
-
-                
-
-                Console.WriteLine("Elapsed {0}ms", stopWatch.Elapsed.Milliseconds);
 
             }
             catch (Exception exception)

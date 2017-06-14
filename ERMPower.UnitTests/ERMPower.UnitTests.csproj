@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Calculations\DefaultMedianStrategyTests.cs" />
+    <Compile Include="DataExtractors\LpDataExtractorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +64,7 @@
       <Name>ERMPower.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

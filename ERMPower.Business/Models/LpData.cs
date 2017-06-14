@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace ERMPower.Business.Models
 {
+    [DebuggerDisplay("{Date} :: {DataValue}")]
     public class LpData
     {
         public string MeterPointCode { get; set; }
@@ -12,7 +14,5 @@ namespace ERMPower.Business.Models
         public decimal DataValue { get; set; }
         public string Units { get; set; }
         public string Status { get; set; }
-
-        public int Test { get; set; }
     }
 }

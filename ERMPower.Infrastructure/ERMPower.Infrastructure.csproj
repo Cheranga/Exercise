@@ -30,8 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,14 +46,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calculations\IMedianStrategy.cs" />
+    <Compile Include="CalculationException.cs" />
+    <Compile Include="CalculationResult.cs" />
+    <Compile Include="BasicFileLoader.cs" />
+    <Compile Include="Interfaces\IFileDataLoader.cs" />
+    <Compile Include="Interfaces\IMedianStrategy.cs" />
     <Compile Include="Calculations\MedianSummary.cs" />
-    <Compile Include="FileLoader.cs" />
+    <Compile Include="Calculations\Median\DefaultMedianStrategy.cs" />
+    <Compile Include="CsvContent.cs" />
+    <Compile Include="FileData.cs" />
+    <Compile Include="Interfaces\IDataExtractor.cs" />
     <Compile Include="Interfaces\IDisplayData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result.cs" />
+    <Compile Include="ResultStatus.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
