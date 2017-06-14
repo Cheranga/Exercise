@@ -1,21 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ERMPower.Business.Models;
 using ERMPower.Core;
 using ERMPower.Core.Interfaces;
 
 namespace ERMPower.Business.FileProcessors
 {
-    public class LpProcessor : IFileProcessor<LpData>
+    public class DefaultFileProcessor<T> : IFileProcessor<T> where T:class 
     {
-        private readonly IDataExtractor<LpData> _dataExtractor;
+        protected IDataExtractor<T> DataExtractor { get; set; }
 
-        public LpProcessor(IDataExtractor<LpData> dataExtractor )
+        public DefaultFileProcessor(IDataExtractor<T> dataExtractor )
         {
-            _dataExtractor = dataExtractor;
+            DataExtractor = dataExtractor;
         }
 
-        public IEnumerable<LpData> Get(IEnumerable<FileData> fileDataCollection)
+        public IEnumerable<T> Get(IEnumerable<FileData> fileDataCollection)
         {
             var dataCollection = fileDataCollection as IList<FileData> ?? fileDataCollection.ToList();
             if (fileDataCollection == null || dataCollection.Any() == false)
@@ -23,7 +22,7 @@ namespace ERMPower.Business.FileProcessors
                 return null;
             }
 
-            var processedLpData = dataCollection.AsParallel().SelectMany(fileData => _dataExtractor.Get(fileData));
+            var processedLpData = dataCollection.AsParallel().SelectMany(fileData => DataExtractor.Get(fileData));
             return processedLpData;
         }
     }

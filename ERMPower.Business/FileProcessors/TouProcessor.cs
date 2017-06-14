@@ -9,7 +9,8 @@ namespace ERMPower.Business.FileProcessors
     //
     // TODO: This code is same as the Lp processor, move it to a common class
     //
-    public class TouProcessor
+
+    public class TouProcessor : DefaultFileProcessor<TouData>
     {
         private readonly IDataExtractor<TouData> _dataExtractor;
 

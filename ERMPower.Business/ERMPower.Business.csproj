@@ -42,8 +42,7 @@
   <ItemGroup>
     <Compile Include="DataExtractors\LpDataExtractor.cs" />
     <Compile Include="DataExtractors\TouDataExtractor.cs" />
-    <Compile Include="FileProcessors\LpProcessor.cs" />
-    <Compile Include="FileProcessors\TouProcessor.cs" />
+    <Compile Include="FileProcessors\DefaultFileProcessor.cs" />
     <Compile Include="Models\LpData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\TouData.cs" />
