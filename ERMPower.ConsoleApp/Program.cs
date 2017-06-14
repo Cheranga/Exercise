@@ -20,10 +20,6 @@ namespace ERMPower.ConsoleApp
 
         static void Main(string[] args)
         {
-            //var directoryLocation = ConfigurationManager.AppSettings.Get("DirectoryPath");
-            //new FileLoader().GetFiles(directoryLocation).Wait();
-
-            //System.Console.ReadLine();
 
             var directoryLocationsConfigValue = ConfigurationManager.AppSettings.Get("DirectoryPath");
             var supportedTypesConfigValue = ConfigurationManager.AppSettings.Get("SupportedTypes");
