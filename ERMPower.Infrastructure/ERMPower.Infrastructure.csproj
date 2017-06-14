@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncFileLoader.cs" />
     <Compile Include="BasicFileLoader.cs" />
     <Compile Include="Calculations\MedianSummary.cs" />
     <Compile Include="Calculations\Median\DefaultMedianStrategy.cs" />
