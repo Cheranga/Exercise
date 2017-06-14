@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ERMPower.Core
+namespace ERMPower.Core.Exceptions
 {
     public class CalculationException : Exception
     {

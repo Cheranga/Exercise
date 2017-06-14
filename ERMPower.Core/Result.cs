@@ -1,5 +1,5 @@
 namespace ERMPower.Core
-{
+{   
     public class Result<T>
     {
         private readonly T _data;
