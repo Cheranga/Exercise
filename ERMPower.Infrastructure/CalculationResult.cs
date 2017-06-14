@@ -10,6 +10,10 @@ namespace ERMPower.Infrastructure
     {
         private readonly CalculationException _exception;
 
+        public CalculationResult(T data) : base(data)
+        {
+        }
+
         public CalculationException CalculationException
         {
             get { return _exception; }

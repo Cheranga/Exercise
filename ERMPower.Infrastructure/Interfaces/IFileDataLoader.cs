@@ -8,6 +8,6 @@ namespace ERMPower.Infrastructure.Interfaces
 {
     public interface IFileDataLoader
     {
-        Task<IEnumerable<FileData>> GetFileData(params string[] directoryLocations);
+        Task<IEnumerable<FileData>> GetFileData(string searchPatterns, string[] directoryLocations);
     }
 }

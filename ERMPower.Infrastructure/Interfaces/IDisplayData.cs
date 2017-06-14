@@ -1,7 +1,12 @@
 ﻿namespace ERMPower.Infrastructure.Interfaces
 {
-    public interface IDisplayData<T> where T:class
+    public interface IMedianDisplayData
     {
-        void ShowDisplayContent(T objectToDisplay);
+        string FileName { get; set; }
+        string DateTime { get; set; }
+        decimal Value { get; set; }
+        decimal MedianValue { get; set; }
     }
+
+
 }

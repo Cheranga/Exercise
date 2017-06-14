@@ -51,6 +51,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ERMPower.Business\ERMPower.Business.csproj">
+      <Project>{ED81A187-F628-4BDE-A15E-0C049B7A249A}</Project>
+      <Name>ERMPower.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ERMPower.Infrastructure\ERMPower.Infrastructure.csproj">
+      <Project>{65FAEACA-914C-47EF-A6C2-1514FCC05AEE}</Project>
+      <Name>ERMPower.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

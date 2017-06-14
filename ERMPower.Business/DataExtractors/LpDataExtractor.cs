@@ -61,6 +61,7 @@ namespace ERMPower.Business.DataExtractors
 
                     if (lpData != null)
                     {
+                        lpData.FilePath = fileData.FilePath;
                         collection.Add(lpData);
                     }
                 }

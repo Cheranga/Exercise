@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="DataExtractors\LpDataExtractor.cs" />
     <Compile Include="DataExtractors\TouDataExtractor.cs" />
+    <Compile Include="FileManager.cs" />
     <Compile Include="FileProcessors\LpProcessor.cs" />
     <Compile Include="FileProcessors\TouProcessor.cs" />
     <Compile Include="Models\LpData.cs" />
