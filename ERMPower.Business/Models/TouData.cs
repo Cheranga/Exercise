@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
+using ERMPower.Core.Interfaces;
 
 namespace ERMPower.Business.Models
 {
-    public class TouData
+    public class TouData : IDisplayData
     {
         //
         //  NOTE
@@ -26,5 +28,15 @@ namespace ERMPower.Business.Models
         public int BillingResetCount { get; set; }
         public DateTime BillingResetDateTime { get; set; }
         public string Rate { get; set; }
+
+        public string FileName
+        {
+            get { return string.IsNullOrEmpty(FilePath) ? string.Empty : Path.GetFileNameWithoutExtension(FilePath); }
+        }
+
+        public string Display()
+        {
+            return string.Format("{0} {1,-23} {2,10}", Date.ToString("dd/MM/yyyy HH:mm:ss"), Energy, FileName);
+        }
     }
 }

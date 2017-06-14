@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using ERMPower.Core.Interfaces;
 
 namespace ERMPower.Business.Models
 {
+    //
+    // TODO: Maybe create a view model for this, since these will be internal structures
+    //
     [DebuggerDisplay("{FileName} :: {DataValue}")]
-    public class LpData
+    public class LpData : IDisplayData
     {
         public string FilePath { get; set; }
         public string MeterPointCode { get; set; }
@@ -20,6 +24,11 @@ namespace ERMPower.Business.Models
         public string FileName
         {
             get { return string.IsNullOrEmpty(FilePath) ? string.Empty : Path.GetFileNameWithoutExtension(FilePath); }
+        }
+
+        public string Display()
+        {
+            return string.Format("{{{0}}} {{{1,-20}}} {{{2,10}}}", FileName, Date.ToString("dd/MM/yyyy HH:mm:ss"), DataValue);
         }
     }
 }

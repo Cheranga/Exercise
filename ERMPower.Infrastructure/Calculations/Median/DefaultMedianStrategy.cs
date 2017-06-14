@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ERMPower.Core;
+using ERMPower.Core.Exceptions;
 using ERMPower.Core.Interfaces;
 
 namespace ERMPower.Infrastructure.Calculations.Median

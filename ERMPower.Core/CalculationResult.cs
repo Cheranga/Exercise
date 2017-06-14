@@ -1,4 +1,6 @@
-﻿namespace ERMPower.Core
+﻿using ERMPower.Core.Exceptions;
+
+namespace ERMPower.Core
 {
     public class CalculationResult<T> : Result<T>
     {

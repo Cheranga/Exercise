@@ -46,7 +46,6 @@
     <Compile Include="BasicFileLoader.cs" />
     <Compile Include="Calculations\MedianSummary.cs" />
     <Compile Include="Calculations\Median\DefaultMedianStrategy.cs" />
-    <Compile Include="CsvContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@ using ERMPower.Core.Interfaces;
 
 namespace ERMPower.ConsoleApp
 {
-   
+
     class Program
     {
         private const decimal DefaultMedianPercentage = 20;
@@ -22,101 +22,142 @@ namespace ERMPower.ConsoleApp
             // Register the dependencies
             //
             Bootstrap.Instance.RegisterDependencies();
+            //
+            // TODO: Add a class to the Business project which take care of the following operations which the application will call
+            //
+            // Get the file handler meta data
+            //
+            var fileHandlers = GetFileHandlerMetaData();
 
-            var directoryLocationsConfigValue = ConfigurationManager.AppSettings.Get("DirectoryPath");
-            var supportedTypesConfigValue = ConfigurationManager.AppSettings.Get("SupportedTypes");
+            var fileLoader = Bootstrap.Instance.Get<IFileDataLoader>();
+            var lpDataList = new List<LpData>();
+
+            foreach (var fileHandler in fileHandlers)
+            {
+                var fileDataList = fileLoader.GetFileData(string.Format("{0}*.{1}", fileHandler.FilePrefix, fileHandler.Extension), fileHandler.Locations).Result;
+
+                switch (fileHandler.FileType.ToUpper())
+                {
+                    case "LP":
+                        var lpProcessor = Bootstrap.Instance.Get<IFileProcessor<LpData>>();
+                        lpDataList.AddRange(lpProcessor.Get(fileDataList));
+                        var lpMedianResult = GetMedianResult(new ReadOnlyCollection<decimal>(lpDataList.Select(data => data.DataValue).ToList()));
+                        if (lpMedianResult.Status == ResultStatus.Success)
+                        {
+                            PrintMedian(lpMedianResult.Data, lpDataList, lpData=> lpData.DataValue);
+                        }
+                        break;
+
+                        // TODO: Provide support to TOU files
+                        //case "TOU":
+                        //    break;
+                }
+            }
+
+
+            System.Console.ReadLine();
+
+        }
+
+        private static void PrintMedian<T>(decimal median, List<T> lpDataList, Func<T, decimal> getValueFunc) where T : IDisplayData
+        {
+            Console.BufferHeight = short.MaxValue - 1;
+
             var medianPercentageConfigValue = ConfigurationManager.AppSettings.Get("MedianPercentage");
-
             decimal medianPercentage;
             if (decimal.TryParse(medianPercentageConfigValue, out medianPercentage) == false)
             {
                 medianPercentage = DefaultMedianPercentage;
             }
+            var rangeValue = (median * medianPercentage) / 100.0m;
 
-            var directoryLocations = directoryLocationsConfigValue.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
-            var searchPatterns = supportedTypesConfigValue.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
-            
+            var highAbnormalValue = median + rangeValue;
+            var lowAbnormalValue = median - rangeValue;
 
-            var fileLoader = Bootstrap.Instance.Get<IFileDataLoader>(); //new BasicFileLoader();
-            var lpProcessor = Bootstrap.Instance.Get<IFileProcessor<LpData>>(); //new LpProcessor(new LpDataExtractor());
-            var lpDataList = new List<LpData>();
+            const string displayFormat = @"{{{0}}} {{{1,-8}}}";
+            var lowerAbnormalities = lpDataList.Where(data=>getValueFunc(data) < lowAbnormalValue).ToList();
+            var higherAbnormalities = lpDataList.Where(data => getValueFunc(data) > highAbnormalValue).ToList();
 
-            foreach (var searchPattern in searchPatterns)
+            if (lowerAbnormalities.Any())
             {
-                var fileDataList = fileLoader.GetFileData(string.Format("{0}*.csv",searchPattern), directoryLocations).Result;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Lower Abnormalities");
 
-                switch (searchPattern.ToUpper())
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                foreach (var abnormal in lowerAbnormalities)
                 {
-                    case "LP":
-                        lpDataList.AddRange(lpProcessor.Get(fileDataList));
-                        break;
-
-                    // TODO: Provide support to TOU files
-                    //case "TOU":
-                    //    fullTouDataList.AddRange(touProcessor.Get(fileDataList));
-                    //    break;
+                    Console.WriteLine(displayFormat, ((IDisplayData)(abnormal)).Display(), median);
                 }
+
+                Console.ResetColor();
             }
 
+            if (higherAbnormalities.Any())
+            {
+                Console.WriteLine("\n\n==========================\n\n");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Higher Abnormalities");
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                foreach (var abnormal in higherAbnormalities)
+                {
+                    Console.WriteLine(displayFormat, ((IDisplayData)(abnormal)).Display(), median);
+                }
+
+                Console.ResetColor();
+            }
+        }
+
+        static CalculationResult<decimal> GetMedianResult(IEnumerable<decimal> values)
+        {
             var medianCalculator = Bootstrap.Instance.Get<IMedianStrategy>(); //new DefaultMedianStrategy();
-            var lpMedianResult = medianCalculator.GetMedian(new ReadOnlyCollection<decimal>(lpDataList.Select(data => data.DataValue).ToList()));
+            var lpMedianResult = medianCalculator.GetMedian(new ReadOnlyCollection<decimal>(values.ToList()));
 
-            Console.BufferHeight = short.MaxValue - 1;
-            if (lpMedianResult.Status == ResultStatus.Success)
+            return lpMedianResult;
+        }
+
+        static IEnumerable<FileHandlerMetaData> GetFileHandlerMetaData()
+        {
+            var customConfig = ConfigurationManager.AppSettings.Get("SupportedTypes");
+            if (customConfig == null)
             {
-                var median = lpMedianResult.Data;
-                var rangeValue = (median*medianPercentage)/100.0m;
-
-                var highAbnormalValue = median + rangeValue;
-                var lowAbnormalValue = median - rangeValue;
-
-                var abnormallpDataList = lpDataList.Where(data => data.DataValue < lowAbnormalValue || data.DataValue > highAbnormalValue).ToList();
-                //
-                // Printing abnormal values
-                //
-                var displayFormat = @"{{{0}}} {{{1,-23}}} {{{2,10}}} {{{3,-8}}}";
-                var lowerAbnormalities = lpDataList.Where(data => data.DataValue < lowAbnormalValue).ToList();
-                var higherAbnormalities = lpDataList.Where(data => data.DataValue > highAbnormalValue).ToList();
-
-                if (lowerAbnormalities.Any())
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Lower Abnormalities");
-
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    foreach (var abnormal in lowerAbnormalities)
-                    {
-                        Console.WriteLine(displayFormat, abnormal.FileName, abnormal.Date.ToString("dd/MM/yyyy HH:mm:ss"), abnormal.DataValue, median);
-                    }
-
-                    Console.ResetColor();
-                }
-
-                if (higherAbnormalities.Any())
-                {
-                    Console.WriteLine("\n\n==========================\n\n");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Higher Abnormalities");
-
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    foreach (var abnormal in higherAbnormalities)
-                    {
-                        Console.WriteLine(displayFormat, abnormal.FileName, abnormal.Date, abnormal.DataValue, median);
-                    }
-
-                    Console.ResetColor();
-                }
+                throw new NotSupportedException("Please provide the supported file types");
             }
 
-            
+            var configData = customConfig.Split(new[] { "||" }, StringSplitOptions.RemoveEmptyEntries);
 
-            System.Console.ReadLine();
+            var fileHandlers = configData.Select(config =>
+            {
+                var data = config.Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+                //
+                // TODO: Perform validation and all
+                //
+                return new FileHandlerMetaData
+                {
+                    FileType = data[0],
+                    FilePrefix = data[1],
+                    Extension = data[2],
+                    TypeNameResponsibleFor = data[3],
+                    Locations = data[4].Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                };
+            });
 
+            return fileHandlers;
 
         }
     }
 
-    
+
+    public class FileHandlerMetaData
+    {
+        public string FileType { get; set; }
+        public string FilePrefix { get; set; }
+        public string Extension { get; set; }
+        public string TypeNameResponsibleFor { get; set; }
+        public string[] Locations { get; set; }
+    }
+
+
 }
 
 
