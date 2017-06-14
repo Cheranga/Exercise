@@ -46,20 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CalculationException.cs" />
-    <Compile Include="CalculationResult.cs" />
     <Compile Include="BasicFileLoader.cs" />
-    <Compile Include="Interfaces\IFileDataLoader.cs" />
-    <Compile Include="Interfaces\IMedianStrategy.cs" />
     <Compile Include="Calculations\MedianSummary.cs" />
     <Compile Include="Calculations\Median\DefaultMedianStrategy.cs" />
     <Compile Include="CsvContent.cs" />
-    <Compile Include="FileData.cs" />
-    <Compile Include="Interfaces\IDataExtractor.cs" />
-    <Compile Include="Interfaces\IDisplayData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Result.cs" />
-    <Compile Include="ResultStatus.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ERMPower.Core\ERMPower.Core.csproj">
+      <Project>{D7FC504E-BD9A-47A8-AA02-140D91064177}</Project>
+      <Name>ERMPower.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

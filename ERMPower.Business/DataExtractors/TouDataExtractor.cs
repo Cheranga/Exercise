@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ERMPower.Business.Models;
+using ERMPower.Infrastructure;
+using ERMPower.Core.Interfaces;
+using ERMPower.Core;
 
 namespace ERMPower.Business.DataExtractors
 {
@@ -14,10 +18,14 @@ namespace ERMPower.Business.DataExtractors
     //  Then it can extract those values and create the required object of the requested type. (single responsibility, and if needed we could override certain
     //  behaviours of it
     //
-    public class TouDataExtractor
+    public class TouDataExtractor : IDataExtractor<TouData>
     {
         //
         // TODO: Same as LpDataExtractor, only the data extracting part will be different
         //
+        public IEnumerable<TouData> Get(FileData fileData)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

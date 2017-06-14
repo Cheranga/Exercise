@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ERMPower.Business.Models;
 using ERMPower.Infrastructure;
 using ERMPower.Infrastructure.Calculations.Median;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ERMPower.Core;
 
-namespace ERMPower.UnitTests.Calculations
+namespace ERMPower.Tests.Calculations
 {
     //
     //  TODO: Add separate test projects

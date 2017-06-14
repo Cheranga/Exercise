@@ -1,26 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ERMPower.Infrastructure.Interfaces;
+using ERMPower.Core;
+using ERMPower.Core.Interfaces;
 
 namespace ERMPower.Infrastructure.Calculations.Median
 {
     public class DefaultMedianStrategy : IMedianStrategy
     {
-        public CalculationResult<decimal?> GetMedian(IReadOnlyCollection<decimal> collection)
+        public CalculationResult<decimal> GetMedian(IReadOnlyCollection<decimal> collection)
         {
             if (collection == null || collection.Any() == false)
             {
-                return new CalculationResult<decimal?>(null,new CalculationException("[collection] is NULL or empty"));
+                return new CalculationResult<decimal>(0,new CalculationException("[collection] is NULL or empty"));
             }
             //
             // If there's only one element, it's the median
             //
             if (collection.Count == 1)
             {
-                return new CalculationResult<decimal?>(collection.First(), null);
+                return new CalculationResult<decimal>(collection.First(), null);
             }
             //
             // A basic calculation of median
@@ -29,7 +27,7 @@ namespace ERMPower.Infrastructure.Calculations.Median
             var halfIndex = numberCount/2;
             var dataPoints = collection.AsParallel().OrderBy(x => x).ToList();
             var isCountEven = numberCount%2 == 0;
-            decimal? median;
+            decimal median;
 
             if (isCountEven)
             {
@@ -40,7 +38,7 @@ namespace ERMPower.Infrastructure.Calculations.Median
                 median = dataPoints[halfIndex];
             }
 
-            return new CalculationResult<decimal?>(median, null);
+            return new CalculationResult<decimal>(median, null);
 
         }
     }

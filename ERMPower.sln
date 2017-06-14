@@ -5,11 +5,13 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERMPower.Business", "ERMPower.Business\ERMPower.Business.csproj", "{ED81A187-F628-4BDE-A15E-0C049B7A249A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERMPower.UnitTests", "ERMPower.UnitTests\ERMPower.UnitTests.csproj", "{056550F2-2560-40ED-9108-7628E8051ED8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERMPower.Tests", "ERMPower.UnitTests\ERMPower.Tests.csproj", "{056550F2-2560-40ED-9108-7628E8051ED8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERMPower.ConsoleApp", "ERMPower.ConsoleApp\ERMPower.ConsoleApp.csproj", "{8150E3EC-6621-4767-BF4C-A5AF9E72649B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERMPower.Infrastructure", "ERMPower.Infrastructure\ERMPower.Infrastructure.csproj", "{65FAEACA-914C-47EF-A6C2-1514FCC05AEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERMPower.Core", "ERMPower.Core\ERMPower.Core.csproj", "{D7FC504E-BD9A-47A8-AA02-140D91064177}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{65FAEACA-914C-47EF-A6C2-1514FCC05AEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65FAEACA-914C-47EF-A6C2-1514FCC05AEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65FAEACA-914C-47EF-A6C2-1514FCC05AEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7FC504E-BD9A-47A8-AA02-140D91064177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7FC504E-BD9A-47A8-AA02-140D91064177}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7FC504E-BD9A-47A8-AA02-140D91064177}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7FC504E-BD9A-47A8-AA02-140D91064177}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

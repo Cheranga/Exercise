@@ -10,6 +10,7 @@ namespace ERMPower.Business.Models
         //  1.  Didn't implement any inheritance chain because although TouData might look like a specialised version of "LpData", but in reality
         //      it might not be.
         //
+        public string FilePath { get; set; }
         public string MeterPointCode { get; set; }
         public string SerialNumber { get; set; }
         public string PlantCode { get; set; }

@@ -1,8 +1,9 @@
-﻿using ERMPower.Infrastructure.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ERMPower.Business.Models;
+using ERMPower.Core;
 using ERMPower.Infrastructure;
+using ERMPower.Core.Interfaces;
 
 namespace ERMPower.Business.FileProcessors
 {

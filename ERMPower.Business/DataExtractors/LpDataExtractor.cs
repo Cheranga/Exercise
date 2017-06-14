@@ -9,7 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ERMPower.Business.Models;
 using ERMPower.Infrastructure;
-using ERMPower.Infrastructure.Interfaces;
+using ERMPower.Core;
+using ERMPower.Core.Interfaces;
 
 namespace ERMPower.Business.DataExtractors
 {
@@ -61,6 +62,7 @@ namespace ERMPower.Business.DataExtractors
 
                     if (lpData != null)
                     {
+                        lpData.FilePath = fileData.FilePath;
                         collection.Add(lpData);
                     }
                 }
