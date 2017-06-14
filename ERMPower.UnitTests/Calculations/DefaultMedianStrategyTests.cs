@@ -1,112 +1,192 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ERMPower.Business.Calculations.Median;
 using ERMPower.Business.Models;
+using ERMPower.Infrastructure;
+using ERMPower.Infrastructure.Calculations.Median;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ERMPower.Core;
 
-namespace ERMPower.UnitTests.Calculations
+namespace ERMPower.Tests.Calculations
 {
+    //
+    //  TODO: Add separate test projects
+    //
     [TestClass]
     public class DefaultMedianStrategyTests
     {
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void WhenTheGivenPercentageIsNegativeMustThrowError()
+        private const string Category = "Median Calculation";
+
+        private DefaultMedianStrategy _strategy;
+
+        [TestInitialize]
+        public void Init()
         {
-            //
-            // Arrange
-            //
-            var strategy = new DefaultMedianStrategy();
-            var lpData = new List<LpData>
-            {
-                new LpData {DataValue = 10},
-                new LpData {DataValue = 20},
-                new LpData {DataValue = 30},
-            };
-            //
-            // Act
-            //
-            strategy.GetMedianSummary(-1, lpData.AsReadOnly(), data => data.DataValue);
+            _strategy = new DefaultMedianStrategy();
+
         }
 
+        [TestCategory(Category)]
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void WhenTheCollectionIsNullMustThrowError()
+        public void WhenTheCollectionIsNullMedianCalculatioMustFail()
         {
-            //
-            // Arrange
-            //
-            var strategy = new DefaultMedianStrategy();
-            List<LpData> lpData = null;
-            //
             // Act
             //
-            strategy.GetMedianSummary<LpData>(-1, null, data => data.DataValue);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(Exception))]
-        public void WhenTheCollectionIsEmptyMustThrowError()
-        {
-            //
-            // Arrange
-            //
-            var strategy = new DefaultMedianStrategy();
-            var  lpData = new List<LpData>();
-            //
-            // Act
-            //
-            strategy.GetMedianSummary(10, lpData.AsReadOnly(), data => data.DataValue);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void WhenThePropertyExpressionIsNullMustThrowError()
-        {
-            //
-            // Arrange
-            //
-            var strategy = new DefaultMedianStrategy();
-            var lpData = new List<LpData>
-            {
-                new LpData {DataValue = 10},
-                new LpData {DataValue = 20},
-                new LpData {DataValue = 30},
-            };
-            //
-            // Act
-            //
-            strategy.GetMedianSummary(10, lpData.AsReadOnly(), null);
-        }
-
-
-        [TestMethod]
-        public void WhenDataIsProperMustReturnTheMedianSummary()
-        {
-            //
-            // Arrange
-            //
-            var strategy = new DefaultMedianStrategy();
-            var lpData = new List<LpData>
-            {
-                new LpData {DataValue = 60},
-                new LpData {DataValue = 50},
-                new LpData {DataValue = 40},
-                new LpData {DataValue = 30},
-                new LpData {DataValue = 20},
-                new LpData {DataValue = 10},
-            };
-            //
-            // Act
-            //
-            var medianSummary = strategy.GetMedianSummary(10, lpData.AsReadOnly(), data => data.DataValue);
+            var result = _strategy.GetMedian(null);
             //
             // Assert
             //
-            Assert.AreEqual(35, medianSummary.Median);
+            Assert.AreEqual(result.Status, ResultStatus.Failure, "Must fail");
+        }
+
+        [TestCategory(Category)]
+        [TestMethod]
+        public void WhenTheCollectionIsEmptyMedianCalculationMustFail()
+        {
+            //
+            // Arrange
+            //
+            var lpData = new List<LpData>();
+            //
+            // Act
+            //
+            var result = _strategy.GetMedian(new ReadOnlyCollection<decimal>(lpData.Select(x => x.DataValue).ToList()));
+            //
+            // Assert
+            //
+            Assert.AreEqual(result.Status, ResultStatus.Failure, "Must fail");
+        }
+
+        [TestCategory(Category)]
+        [TestMethod]
+        public void WhenEvenNumberOfSortedCollectionIsProvidedMedianCalculationMustBeSuccessful()
+        {
+            //
+            // Arrange
+            //
+            var lpData = new List<LpData>
+            {
+                new LpData {DataValue = 10},
+                new LpData {DataValue = 20},
+                new LpData {DataValue = 30},
+                new LpData {DataValue = 40},
+                new LpData {DataValue = 50},
+                new LpData {DataValue = 60}
+            };
+            //
+            // Act
+            //
+            var result = _strategy.GetMedian(new ReadOnlyCollection<decimal>(lpData.Select(x => x.DataValue).ToList()));
+            //
+            // Assert
+            //
+            Assert.AreEqual(result.Status, ResultStatus.Success, "Must be success");
+            Assert.AreEqual(result.Data, 35);
+        }
+
+        [TestCategory(Category)]
+        [TestMethod]
+        public void WhenEvenNumberOfUnSortedCollectionIsProvidedMedianCalculationMustBeSuccessful()
+        {
+            //
+            // Arrange
+            //
+            var lpData = new List<LpData>
+            {
+                new LpData {DataValue = 10},
+                new LpData {DataValue = 50},
+                new LpData {DataValue = 60},
+                new LpData {DataValue = 20},
+                new LpData {DataValue = 40},
+                new LpData {DataValue = 30}
+            };
+            //
+            // Act
+            //
+            var result = _strategy.GetMedian(new ReadOnlyCollection<decimal>(lpData.Select(x => x.DataValue).ToList()));
+            //
+            // Assert
+            //
+            Assert.AreEqual(result.Status, ResultStatus.Success, "Must be success");
+            Assert.AreEqual(result.Data, 35);
+        }
+
+        [TestCategory(Category)]
+        [TestMethod]
+        public void WhenOddNumberOfSortedCollectionIsProvidedMedianCalculationMustBeSuccessful()
+        {
+            //
+            // Arrange
+            //
+            var lpData = new List<LpData>
+            {
+                new LpData {DataValue = 10},
+                new LpData {DataValue = 20},
+                new LpData {DataValue = 30},
+                new LpData {DataValue = 40},
+                new LpData {DataValue = 50},
+                new LpData {DataValue = 60},
+                new LpData {DataValue = 70}
+            };
+            //
+            // Act
+            //
+            var result = _strategy.GetMedian(new ReadOnlyCollection<decimal>(lpData.Select(x => x.DataValue).ToList()));
+            //
+            // Assert
+            //
+            Assert.AreEqual(result.Status, ResultStatus.Success, "Must be success");
+            Assert.AreEqual(result.Data, 40);
+        }
+
+        [TestCategory(Category)]
+        [TestMethod]
+        public void WhenOddNumberOfUnSortedCollectionIsProvidedMedianCalculationMustBeSuccessful()
+        {
+            //
+            // Arrange
+            //
+            var lpData = new List<LpData>
+            {
+                new LpData {DataValue = 10},
+                new LpData {DataValue = 50},
+                new LpData {DataValue = 60},
+                new LpData {DataValue = 20},
+                new LpData {DataValue = 40},
+                new LpData {DataValue = 30},
+                new LpData {DataValue = 5}
+            };
+            //
+            // Act
+            //
+            var result = _strategy.GetMedian(new ReadOnlyCollection<decimal>(lpData.Select(x => x.DataValue).ToList()));
+            //
+            // Assert
+            //
+            Assert.AreEqual(result.Status, ResultStatus.Success, "Must be success");
+            Assert.AreEqual(result.Data, 30);
+        }
+
+        [TestCategory(Category)]
+        [TestMethod]
+        public void WhenThereIsOnlyOneItemInCollectionMedianCalculationMustBeSuccessful()
+        {
+            //
+            // Arrange
+            //
+            var lpData = new List<LpData>
+            {
+                new LpData {DataValue = 10}
+            };
+            //
+            // Act
+            //
+            var result = _strategy.GetMedian(new ReadOnlyCollection<decimal>(lpData.Select(x => x.DataValue).ToList()));
+            //
+            // Assert
+            //
+            Assert.AreEqual(result.Status, ResultStatus.Success, "Must be success");
+            Assert.AreEqual(result.Data, 10);
         }
     }
 }
